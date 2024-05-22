@@ -1,0 +1,57 @@
+{
+  "info": {
+    "name": "SunoAPI-GeneratePopSong",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Generate Pop Song",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"prompt\": \"Create a beautiful pop song about automated code generation\",\n  \"tags\": \"pop, upbeat, happy\",\n  \"title\": \"The Code Generation Song\",\n  \"make_instrumental\": false,\n  \"wait_audio\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/api/custom_generate",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "api",
+            "custom_generate"
+          ]
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"API call completes within 60 seconds\", function () {",
+              "    pm.expect(pm.response.responseTime).to.be.below(60000);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.visualizer.set(\"<h2>Generated Pop Song Links</h2><ul>{{responseBody.audio_files.map(file => `<li><a href='${file}'>${file}</a></li>`).join('')}}</ul>\", {responseBody: pm.response.json()});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ]
+}
