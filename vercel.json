@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/custom_generate/**": {
+      "maxDuration": 60
+    }
+  }
+}
